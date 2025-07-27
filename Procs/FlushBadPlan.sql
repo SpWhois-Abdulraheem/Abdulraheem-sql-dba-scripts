@@ -1,0 +1,1 @@
+DBCC FREEPROCCACHE (handle goes here);

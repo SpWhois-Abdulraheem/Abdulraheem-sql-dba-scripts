@@ -1,0 +1,3 @@
+--This script show how much memory it in caache on the server.  Each memory clerk tells you what is holding and using that memory.  The total of all this space is how much is being used out of the total reserved memory SQL Server is using.  The remaining portion is then used temporarily by queries being run.
+
+SELECT * FROM sys.dm_os_memory_clerks ORDER BY (single_pages_kb + multi_pages_kb + awe_allocated_kb) desc

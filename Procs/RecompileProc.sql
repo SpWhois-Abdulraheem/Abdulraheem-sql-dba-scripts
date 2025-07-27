@@ -1,0 +1,1 @@
+Exec sp_recompile 'dbo.procname'

@@ -1,0 +1,13 @@
+
+select sum(qs.execution_count) as [Total Execution Count],
+Sum(qs.total_logical_reads)/131072 AS [Total Gigs Read],
+Sum(qs.total_elapsed_time)/1000000 as [Total CPU seconds]
+from sys.dm_exec_query_stats qs
+CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) qt  --Query text from here
+CROSS APPLY sys.dm_exec_query_plan(qs.plan_handle) qp
+CROSS APPLY (SELECT CONVERT(int, value) AS [DatabaseID] 
+              FROM sys.dm_exec_plan_attributes(qs.plan_handle)
+              WHERE attribute = N'dbid') AS db
+LEFT JOIN sys.databases qd ON db.DatabaseID = qd.database_id  -- Database name from here
+--Where qs.execution_count > 100  --Use to fine tune Per Execution searches for sql that runs often
+Where qt.text like '%CPPCoverageAvailability%'

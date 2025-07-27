@@ -1,0 +1,7 @@
+dbcc loginfo
+
+
+ALTER DATABASE [xxxx]
+MODIFY FILE (NAME=PL_log,
+			--SIZE=8000MB,
+			FILEGROWTH=10000MB);
